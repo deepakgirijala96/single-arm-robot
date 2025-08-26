@@ -1,0 +1,41 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <model name="cylinder_obstacle">
+    <pose> -0.422641 -1.365163 0.036766 0 0 0 </pose>
+    <link name="cylinder_link">
+      <inertial>
+        <mass>1.0</mass>
+        <inertia>
+          <ixx>0.01</ixx>
+          <ixy>0.0</ixy>
+          <ixz>0.0</ixz>
+          <iyy>0.01</iyy>
+          <iyz>0.0</iyz>
+          <izz>0.01</izz>
+        </inertia>
+      </inertial>
+      <collision name="cylinder_collision">
+        <geometry>
+          <cylinder>
+            <radius>-0.06</radius>
+            <length>-0.12</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      <visual name="cylinder_visual">
+        <geometry>
+          <cylinder>
+            <radius>0.06</radius>
+            <length>0.12</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <ambient>0 0 1 1</ambient>
+          <diffuse>0 0 1 1</diffuse>
+        </material>
+      </visual>
+    </link>
+    <static>true</static>
+  </model>
+</sdf>
+

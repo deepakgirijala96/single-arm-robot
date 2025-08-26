@@ -1,0 +1,5 @@
+<launch>
+  <param name="moveit_controller_manager" value="moveit_simple_controller_manager/MoveITSimplerControllermanager" />
+ <rosparn file="$(find movit_robot_arm_sim)/config/new_ros_controllers.yaml"/>
+
+</launch>

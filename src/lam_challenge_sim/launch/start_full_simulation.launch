@@ -1,0 +1,28 @@
+<launch>
+  <!-- Start Gazebo with your world -->
+  <include file="$(find lam_challenge_sim)/launch/start_arena.launch" />
+
+  <!-- Load the robot's URDF -->
+<param name="robot_description" textfile="$(find alfr3)/urdf/alfr3.urdf" />
+
+  <!-- Spawn the robot into Gazebo (with pose) -->
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model"
+        args="-param robot_description -urdf -model alfr3
+              -x 1.30673 -y 0.676664 -z 0.040979
+              -R 5e-06 -P 1.5e-05 -Y -3.12246"
+        output="screen"/>
+
+  <!-- Load joint controller configurations -->
+  <rosparam file="$(find alfr3)/config/controllers.yaml" command="load"/>
+
+  <!-- Spawn controllers (wait for Gazebo to load first) -->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner"
+        respawn="false" output="screen"
+        args="joint_state_controller diff_drive_controller"
+        launch-prefix="bash -c 'sleep 5; exec '"/>
+
+  <!-- Publish joint states to TF for rviz -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher"
+        type="robot_state_publisher" respawn="false" output="screen"/>
+</launch>
+

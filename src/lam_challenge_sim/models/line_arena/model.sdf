@@ -1,0 +1,40 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <model name="line_arena">
+    <static>true</static>
+    <link name="arena_surface">
+      <!-- Collision plane -->
+      <collision name="collision">
+        <geometry>
+          <plane>
+            <normal>0 0 1</normal>
+            <size>10 10</size> <!-- Adjust arena size if needed -->
+          </plane>
+        </geometry>
+        <surface>
+          <contact>
+            <collide_bitmask>0x01</collide_bitmask>
+          </contact>
+        </surface>
+      </collision>
+
+      <!-- Visual with arena texture -->
+      <visual name="visual">
+        <geometry>
+          <plane>
+            <normal>0 0 1</normal>
+            <size>10 10</size>
+          </plane>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://line_arena/materials/scripts</uri>
+            <uri>model://line_arena/materials/textures</uri>
+            <name>line_arena/line_arena</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>
+

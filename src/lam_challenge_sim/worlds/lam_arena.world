@@ -1,0 +1,59 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <world name="lam_challenge_world">
+
+    <!-- Physics and Lighting -->
+    <physics type="ode"><max_step_size>0.001</max_step_size><real_time_factor>1</real_time_factor><real_time_update_rate>1000</real_time_update_rate></physics>
+    <include><uri>model://sun</uri></include>
+    <include><uri>model://line_arena</uri><pose>0 -1.2 0 0 0 0</pose></include>
+
+    <!-- Display Wall Model -->
+    <model name="display_wall">
+      <static>true</static>
+      <pose>0 1.5 0.75 3.14159 0 0</pose>
+      <link name="wall_base"><visual name="visual"><geometry><box><size>4.0 0.10 1.5</size></box></geometry><material><ambient>0.3 0.3 0.3 1</ambient><diffuse>0.3 0.3 0.3 1</diffuse></material></visual><collision name="collision"><geometry><box><size>4.0 0.15 1.5</size></box></geometry></collision></link>
+      <link name="L_vertical_led"><pose>-1.2 0.08 0.25 0 0 0</pose><visual name="visual"><geometry><box><size>0.1 0.02 0.6</size></box></geometry><material><ambient>0.2 0.2 0.2 1</ambient><diffuse>0.2 0.2 0.2 1</diffuse></material></visual></link>
+      <link name="L_horizontal_led"><pose>-1.0 0.08 0.5 0 0 0</pose><visual name="visual"><geometry><box><size>0.5 0.02 0.1</size></box></geometry><material><ambient>0.2 0.2 0.2 1</ambient><diffuse>0.2 0.2 0.2 1</diffuse></material></visual></link>
+      <link name="A_left_leg_led"><pose>-0.5 0.08 0.25 0 -0.45 0</pose><visual name="visual"><geometry><box><size>0.1 0.02 0.6</size></box></geometry><material><ambient>0.2 0.2 0.2 1</ambient><diffuse>0.2 0.2 0.2 1</diffuse></material></visual></link>
+      <link name="A_right_leg_led"><pose>-0.22 0.08 0.25 0 0.45 0</pose><visual name="visual"><geometry><box><size>0.1 0.02 0.6</size></box></geometry><material><ambient>0.2 0.2 0.2 1</ambient><diffuse>0.2 0.2 0.2 1</diffuse></material></visual></link>
+      <link name="A_crossbar_led"><pose>-0.35 0.08 0.23 0 0 0</pose><visual name="visual"><geometry><box><size>0.3 0.02 0.1</size></box></geometry><material><ambient>0.2 0.2 0.2 1</ambient><diffuse>0.2 0.2 0.2 1</diffuse></material></visual></link>
+      <link name="M_left_leg_led"><pose>0.2 0.08 0.22 0 0 0</pose><visual name="visual"><geometry><box><size>0.1 0.02 0.6</size></box></geometry><material><ambient>0.2 0.2 0.2 1</ambient><diffuse>0.2 0.2 0.2 1</diffuse></material></visual></link>
+      <link name="M_right_leg_led"><pose>0.7 0.08 0.22 0 0 0</pose><visual name="visual"><geometry><box><size>0.1 0.02 0.6</size></box></geometry><material><ambient>0.2 0.2 0.2 1</ambient><diffuse>0.2 0.2 0.2 1</diffuse></material></visual></link>
+      <link name="M_middle_left_led"><pose>0.31 0.08 0.16 0 0.5 0</pose><visual name="visual"><geometry><box><size>0.1 0.02 0.5</size></box></geometry><material><ambient>0.2 0.2 0.2 1</ambient><diffuse>0.2 0.2 0.2 1</diffuse></material></visual></link>
+      <link name="M_middle_right_led"><pose>0.59 0.08 0.16 0 -0.5 0</pose><visual name="visual"><geometry><box><size>0.1 0.02 0.5</size></box></geometry><material><ambient>0.2 0.2 0.2 1</ambient><diffuse>0.2 0.2 0.2 1</diffuse></material></visual></link>
+      
+      <!-- This is the LCD Panel, which starts as black -->
+      <link name="lcd_panel">
+        <pose>1.3 0.08 0.2 0 0 0</pose>
+        <visual name="visual">
+          <geometry><box><size>0.9 0.05 0.6</size></box></geometry>
+          <material>
+            <script><name>Gazebo/Black</name></script>
+          </material>
+        </visual>
+      </link>
+    </model>
+    
+    <!-- Other Models (Unchanged) -->
+    <model name='peristaltic_pump_detailed'><static>true</static><pose>-0.054574 1.363129 1.150157 0 0 0</pose><link name='rail'><pose>0 0 0.15 0 1.5707 0</pose><visual name='visual'><geometry><cylinder><radius>0.03</radius><length>3.6</length></cylinder></geometry><material><ambient>0.8 0.8 0.8 1</ambient><diffuse>0.8 0.8 0.8 1</diffuse></material></visual></link><link name='pump_head'><pose>0 0 0.15 0 1.5707 0</pose><visual name='visual'><geometry><cylinder><radius>0.09</radius><length>0.5</length></cylinder></geometry><material><ambient>0.0 0.3 0.3 1</ambient><diffuse>0.0 0.3 0.3 1</diffuse></material></visual></link></model>
+    <model name='pipe_section'><static>true</static><pose>-1.823149 1.343845 0.725473 0 1.545488 0</pose><link name='pipe_body'><pose>0 0 0 0 1.5707 0</pose><visual name='visual'><geometry><cylinder><radius>0.03</radius><length>1.2</length></cylinder></geometry><material><ambient>0.8 0.8 0.8 1</ambient><diffuse>0.8 0.8 0.8 1</diffuse></material></visual></link></model>
+    <model name="gate_1"><static>true</static><pose>-0.495738 -0.200421 0 0 0 1.57</pose><link name="left_post"><pose>0 0.2 0.25 0 0 0</pose><visual name="visual"><geometry><box><size>0.1 0.1 0.5</size></box></geometry></visual><collision name="collision"><geometry><box><size>0.1 0.1 0.5</size></box></geometry></collision></link><link name="right_post"><pose>0 -0.2 0.25 0 0 0</pose><visual name="visual"><geometry><box><size>0.1 0.1 0.5</size></box></geometry></visual><collision name="collision"><geometry><box><size>0.1 0.1 0.5</size></box></geometry></collision></link><link name="top_bar"><pose>0 0 0.5 0 0 0</pose><visual name="visual"><geometry><box><size>0.1 0.5 0.1</size></box></geometry></visual><collision name="collision"><geometry><box><size>0.1 0.5 0.1</size></box></geometry></collision></link></model>
+    <model name="gate_2"><static>true</static><pose>-0.500026 0.273412 0 0 0 1.569473</pose><link name="left_post"><pose>0 0.2 0.25 0 0 0</pose><visual name="visual"><geometry><box><size>0.1 0.1 0.5</size></box></geometry></visual><collision name="collision"><geometry><box><size>0.1 0.1 0.5</size></box></geometry></collision></link><link name="right_post"><pose>0 -0.2 0.25 0 0 0</pose><visual name="visual"><geometry><box><size>0.1 0.1 0.5</size></box></geometry></visual><collision name="collision"><geometry><box><size>0.1 0.1 0.5</size></box></geometry></collision></link><link name="top_bar"><pose>0 0 0.5 0 0 0</pose><visual name="visual"><geometry><box><size>0.1 0.5 0.1</size></box></geometry></visual><collision name="collision"><geometry><box><size>0.1 0.5 0.1</size></box></geometry></collision></link></model>
+    <model name="gate_3"><static>true</static><pose>0.232638 0.721076 0 0 0 3.089002</pose><link name="left_post"><pose>0 0.2 0.25 0 0 0</pose><visual name="visual"><geometry><box><size>0.1 0.1 0.5</size></box></geometry></visual><collision name="collision"><geometry><box><size>0.1 0.1 0.5</size></box></geometry></collision></link><link name="right_post"><pose>0 -0.2 0.25 0 0 0</pose><visual name="visual"><geometry><box><size>0.1 0.1 0.5</size></box></geometry></visual><collision name="collision"><geometry><box><size>0.1 0.1 0.5</size></box></geometry></collision></link><link name="top_bar"><pose>0 0 0.5 0 0 0</pose><visual name="visual"><geometry><box><size>0.1 0.5 0.1</size></box></geometry></visual><collision name="collision"><geometry><box><size>0.1 0.5 0.1</size></box></geometry></collision></link></model>
+    
+    <!-- C++ Plugin -->
+    <plugin name="visual_controller_plugin" filename="libvisual_controller_plugin.so">
+      <pump_visual>peristaltic_pump_detailed::pump_head::visual</pump_visual>
+      <lcd_visual>display_wall::lcd_panel::visual</lcd_visual>
+      <letter_l_visual>display_wall::L_vertical_led::visual</letter_l_visual>
+      <letter_l_visual>display_wall::L_horizontal_led::visual</letter_l_visual>
+      <letter_a_visual>display_wall::A_left_leg_led::visual</letter_a_visual>
+      <letter_a_visual>display_wall::A_right_leg_led::visual</letter_a_visual>
+      <letter_a_visual>display_wall::A_crossbar_led::visual</letter_a_visual>
+      <letter_m_visual>display_wall::M_left_leg_led::visual</letter_m_visual>
+      <letter_m_visual>display_wall::M_right_leg_led::visual</letter_m_visual>
+      <letter_m_visual>display_wall::M_middle_left_led::visual</letter_m_visual>
+      <letter_m_visual>display_wall::M_middle_right_led::visual</letter_m_visual>
+    </plugin>
+  </world>
+</sdf>

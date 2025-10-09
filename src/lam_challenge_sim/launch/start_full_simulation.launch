@@ -1,0 +1,31 @@
+<launch>
+  <!-- Set use_sim_time parameter to true for simulation -->
+  <param name="use_sim_time" value="true" />
+
+  <!-- =================================================================== -->
+  <!-- == THIS IS THE CRITICAL CHANGE ==================================== -->
+  <!-- =================================================================== -->
+  <!-- We now launch Gazebo directly and pass your world file as an argument -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find lam_challenge_sim)/worlds/lam_arena.world"/>
+    <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="gui" value="true"/>
+    <arg name="headless" value="false"/>
+    <arg name="debug" value="false"/>
+  </include>
+
+  <!-- =================================================================== -->
+  <!-- == THE REST OF YOUR FILE IS UNCHANGED ============================= -->
+  <!-- =================================================================== -->
+
+  <!-- Load the robot's URDF onto the parameter server -->
+  <param name="robot_description" textfile="$(find alfr3)/urdf/alfr3.urdf" />
+
+  <!-- Spawn the robot in Gazebo at your specified starting position -->
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model"
+        args="-param robot_description -urdf -model alfr3
+              -x 1.29 -y 0.38 -z 0.05
+              -R 0 -P 0 -Y -3.12"
+        output="screen"/>
+</launch>

@@ -1,0 +1,14 @@
+material LCD/SuccessImage
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        // Put your image filename here (add the image into materials/textures/)
+        texture success_image.png
+      }
+    }
+  }
+}

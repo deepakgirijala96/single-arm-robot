@@ -1,0 +1,75 @@
+<launch>
+  <!-- Use simulation time -->
+  <param name="use_sim_time" value="true" />
+
+  <!-- =================================================================== -->
+  <!-- 1. Launch Gazebo with your world file (Unchanged) ================= -->
+  <!-- =================================================================== -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find lam_challenge_sim)/worlds/lam_arena.world"/>
+    <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="gui" value="true"/>
+    <arg name="headless" value="false"/>
+    <arg name="debug" value="false"/>
+  </include>
+
+  <!-- =================================================================== -->
+  <!-- 2. Spawn the Line Follower (alfr3) in its own namespace ======== -->
+  <!-- =================================================================== -->
+  <!-- Added group tag for namespacing -->
+  <group ns="alfr3">
+    <!-- Load robot URDF into the /alfr3 namespace -->
+    <param name="robot_description" textfile="$(find alfr3)/urdf/alfr3.urdf" />
+
+    <!-- Spawn robot in Gazebo (Your original node, now inside group) -->
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model"
+          args="-param robot_description -urdf -model alfr3
+                -x 1.29 -y 0.38 -z 0.05
+                -R 0 -P 0 -Y -3.12"
+          output="screen"/>
+  </group>
+
+  <!-- =================================================================== -->
+  <!-- 3. Spawn the Robotic Arm (sarm) and load its controllers ======= -->
+  <!-- =================================================================== -->
+  <!-- Added group tag for namespacing -->
+  <group ns="sarm">
+    <!-- Load the ARM's URDF into the /sarm namespace -->
+    <param name="robot_description" textfile="$(find robotic_arm_omnibase_platform3)/urdf/robotic_arm_omnibase_platform3.urdf" />
+
+    <!-- Spawn the arm using your specified coordinates -->
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model"
+          args="-param robot_description -urdf -model sarm
+                -x 1.435554 -y -0.026678 -z 0.007642" />
+
+    <!-- Added: Load controllers config correctly into the /sarm namespace -->
+    <rosparam file="$(find robotic_arm_omnibase_platform3)/config/sarm_controllers.yaml" command="load"/>
+
+    <!-- Added: Spawn the controllers correctly within the /sarm namespace -->
+    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+          output="screen" ns="/sarm" args="joint_state_controller
+                                          base_cap_position_controller
+                                          link_1_position_controller
+                                          link_2_position_controller
+                                          link_3_position_controller
+                                          driver_gear_position_controller
+                                          gripper_1_position_controller
+                                          gripper_2_position_controller"/>
+  </group>
+
+  <!-- =================================================================== -->
+  <!-- 4. Start ALFR3 Python Nodes (Unchanged) ========================= -->
+  <!-- =================================================================== -->
+  <node name="gate_detector_node" pkg="alfr3" type="gate_detector.py" output="screen" />
+  <node name="alfr_controller_node" pkg="alfr3" type="alfr_controller.py" output="screen" />
+
+  <!-- =================================================================== -->
+  <!-- 5. Start SARM Teleop Nodes (Added) ================================ -->
+  <!-- =================================================================== -->
+  <!-- Added: Starts keyboard control for the base -->
+  <node name="sarm_teleop" pkg="robotic_arm_omnibase_platform3" type="sarm_teleop.py" output="screen" launch-prefix="xterm -e" />
+  <!-- Added: Starts keyboard control for the arm joints -->
+  <node name="sarm_arm_teleop" pkg="robotic_arm_omnibase_platform3" type="sarm_arm_teleop.py" output="screen" launch-prefix="xterm -e" />
+
+</launch>

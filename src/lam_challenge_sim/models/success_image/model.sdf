@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <model name="success_image">
+    <static>true</static>
+    <link name="ground">
+      <visual name="visual">
+        <geometry>
+          <plane>
+            <normal>0 0 1</normal>
+            <size>3 3</size>
+          </plane>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://success_image/materials/scripts</uri>
+            <uri>model://success_image/materials/textures</uri>
+            <name>success_image/Texture</name>
+          </script>
+        </material>
+      </visual>
+      <collision name="collision">
+        <geometry>
+          <plane>
+            <normal>0 0 1</normal>
+            <size>3 3</size>
+          </plane>
+        </geometry>
+      </collision>
+    </link>
+  </model>
+</sdf>

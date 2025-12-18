@@ -1,1 +1,0 @@
-controller_joint_names: ['', 'left_wheel_1', 'left_wheel_2', 'right_wheel_1', 'right_wheel_2', 'base_cap', 'link_1', 'link_2', 'link_3', 'driver_gear', 'gripper_1', 'driven_gear', 'gripper_2', ]

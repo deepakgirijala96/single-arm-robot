@@ -1,0 +1,14 @@
+material LineArena/Texture
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture line_arena.png
+      }
+    }
+  }
+}
+

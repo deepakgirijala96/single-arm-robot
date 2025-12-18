@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<robot name="alfr3">
+  <!-- Base Link -->
+  <link name="base_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <mass value="0.11564"/>
+      <inertia ixx="0.00012118" ixy="0" ixz="0" iyy="0.00029141" iyz="0" izz="0.0004083"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://alfr3/meshes/base_link.STL"/>
+      </geometry>
+      <material name="Blue">
+        <color rgba="0 0 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://alfr3/meshes/base_link.STL"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- Wheels and Joints (Unchanged) -->
+  <link name="left_wheel"><inertial><origin rpy="0 0 0" xyz="0 0 -0.02"/><mass value="0.17114"/><inertia ixx="8.1335e-05" ixy="0" ixz="0" iyy="8.1335e-05" iyz="0" izz="0.00011723"/></inertial><visual><geometry><mesh filename="package://alfr3/meshes/left_wheel.STL"/></geometry><material name="Black"><color rgba="0 0 0 1"/></material></visual><collision><geometry><mesh filename="package://alfr3/meshes/left_wheel.STL"/></geometry></collision></link>
+  <joint name="left_wheel_joint" type="continuous"><parent link="base_link"/><child link="left_wheel"/><origin rpy="-1.5708 0 0" xyz="-0.06317 0.1103 -0.004"/><axis xyz="0 0 1"/><limit effort="10" velocity="10"/><dynamics damping="0.5" friction="2.0"/></joint>
+  <link name="right_wheel"><inertial><origin rpy="0 0 0" xyz="0 0 0.02"/><mass value="0.17114"/><inertia ixx="8.1335e-05" ixy="0" ixz="0" iyy="8.1335e-05" iyz="0" izz="0.00011723"/></inertial><visual><geometry><mesh filename="package://alfr3/meshes/right_wheel.STL"/></geometry><material name="Black"><color rgba="0.3 0.3 0.3 1"/></material></visual><collision><geometry><mesh filename="package://alfr3/meshes/right_wheel.STL"/></geometry></collision></link>
+  <joint name="right_wheel_joint" type="continuous"><parent link="base_link"/><child link="right_wheel"/><origin rpy="-1.5708 0 0" xyz="-0.06317 -0.1103 -0.004"/><axis xyz="0 0 1"/><limit effort="10" velocity="10"/><dynamics damping="0.5" friction="2.0"/></joint>
+  <link name="castor_wheel"><inertial><origin rpy="0 0 0" xyz="0 0 0"/><mass value="0.05"/><inertia ixx="1e-4" ixy="0" ixz="0" iyy="1e-4" iyz="0" izz="1e-4"/></inertial><visual><geometry><mesh filename="package://alfr3/meshes/castor_wheel.STL"/></geometry><material name="Black"><color rgba="0 0 0 1"/></material></visual><collision><geometry><mesh filename="package://alfr3/meshes/castor_wheel.STL"/></geometry></collision></link>
+  <joint name="castor_wheel_joint" type="revolute"><parent link="base_link"/><child link="castor_wheel"/><origin rpy="-1.5708 0 0" xyz="0.05883 0 -0.033"/><axis xyz="0 0 1"/><limit effort="10" velocity="10"/><dynamics friction="0.1"/></joint>
+  <link name="dummy_link"/><joint name="base_fixed_joint" type="fixed"><parent link="dummy_link"/><child link="base_link"/></joint>
+  <link name="camera_link"><inertial><mass value="1e-5"/><inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6"/></inertial><visual><geometry><box size="0.01 0.03 0.03"/></geometry></visual><collision><geometry><box size="0.02 0.05 0.05"/></geometry></collision></link>
+  <joint name="camera_joint" type="fixed"><parent link="base_link"/><child link="camera_link"/><origin rpy="0 0.7 0" xyz="0.08 0 0.03"/></joint>
+
+  <!-- =================================================================== -->
+  <!-- == DISTANCE SENSOR LINK AND JOINT ================================= -->
+  <!-- =================================================================== -->
+  <link name="front_laser_link"><inertial><mass value="0.01"/><inertia ixx="0.001" ixy="0.0" ixz="0.0" iyy="0.001" iyz="0.0" izz="0.001"/></inertial><visual><geometry><box size="0.02 0.03 0.03"/></geometry><material name="Red"><color rgba="1 0 0 1"/></material></visual><collision><geometry><box size="0.02 0.03 0.03"/></geometry></collision></link>
+  
+  <joint name="front_laser_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="front_laser_link"/>
+    <!-- THE ONLY CHANGE IS HERE: rpy="0 -1.5707 0" points the sensor's beam UPWARDS -->
+    <origin rpy="0 -1.5707 0" xyz="0.1 0 0.05"/>
+  </joint>
+
+  <!-- =================================================================== -->
+  <!-- == GAZEBO PLUGINS ================================================= -->
+  <!-- =================================================================== -->
+  <gazebo reference="camera_link"><sensor name="front_camera" type="camera"><always_on>true</always_on><update_rate>30</update_rate><camera><horizontal_fov>1.047</horizontal_fov><image><width>640</width><height>480</height><format>R8G8B8</format></image><clip><near>0.1</near><far>100</far></clip></camera><plugin filename="libgazebo_ros_camera.so" name="camera_controller"><alwaysOn>true</alwaysOn><updateRate>30</updateRate><cameraName>front_camera</cameraName><imageTopicName>image_raw</imageTopicName><cameraInfoTopicName>camera_info</cameraInfoTopicName><frameName>camera_link</frameName></plugin></sensor></gazebo>
+  
+  <gazebo reference="front_laser_link">
+    <sensor name="front_laser_sensor" type="ray">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>true</visualize>
+      <update_rate>10</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>3</samples><resolution>1</resolution><min_angle>-0.087</min_angle><max_angle>0.087</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.1</min><max>3.0</max><resolution>0.01</resolution>
+        </range>
+      </ray>
+      <plugin filename="libgazebo_ros_laser.so" name="gazebo_ros_laser">
+        <topicName>/alfr3/front_laser</topicName>
+        <frameName>front_laser_link</frameName>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <gazebo><plugin filename="libgazebo_ros_diff_drive.so" name="diff_drive"><robotNamespace>/alfr3</robotNamespace><numWheelPairs>1</numWheelPairs><leftJoint>left_wheel_joint</leftJoint><rightJoint>right_wheel_joint</rightJoint><wheelSeparation>0.2206</wheelSeparation><wheelDiameter>0.12634</wheelDiameter><robotBaseFrame>base_link</robotBaseFrame><torque>5.0</torque><topicName>cmd_vel</topicName><odometryTopic>odom</odometryTopic><broadcastTF>true</broadcastTF><publishWheelTF>false</publishWheelTF><publishOdomTF>true</publishOdomTF><publishWheelJointState>true</publishWheelJointState><wheelAcceleration>0.0</wheelAcceleration><wheelTorque>5.0</wheelTorque><updateRate>100.0</updateRate><odometrySource>1</odometrySource><publishTf>true</publishTf><rosDebugLevel>info</rosDebugLevel></plugin></gazebo>
+
+  <gazebo reference="base_link"><material>Gazebo/Blue</material></gazebo>
+  <gazebo reference="left_wheel"><material>Gazebo/Black</material></gazebo>
+  <gazebo reference="right_wheel"><material>Gazebo/Black</material></gazebo>
+  <gazebo reference="castor_wheel"><material>Gazebo/Black</material></gazebo>
+</robot>

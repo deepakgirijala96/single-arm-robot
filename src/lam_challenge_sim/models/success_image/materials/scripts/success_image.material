@@ -1,0 +1,14 @@
+material success_image/Texture
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture success_image.png
+      }
+    }
+  }
+}
+

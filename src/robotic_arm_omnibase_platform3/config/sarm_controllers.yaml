@@ -1,0 +1,47 @@
+# Publish all joint states (Requires PID gains for Gazebo plugin)
+joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 50
+  pid: {p: 100.0, i: 0.01, d: 10.0} # Added default PID
+
+# Position Controllers (PID gains were already here, kept as is)
+base_cap_position_controller:
+  type: position_controllers/JointPositionController
+  joint: base_cap
+  pid: {p: 100.0, i: 0.01, d: 10.0}
+link_1_position_controller:
+  type: position_controllers/JointPositionController
+  joint: link_1
+  pid: {p: 100.0, i: 0.01, d: 10.0}
+link_2_position_controller:
+  type: position_controllers/JointPositionController
+  joint: link_2
+  pid: {p: 100.0, i: 0.01, d: 10.0}
+link_3_position_controller:
+  type: position_controllers/JointPositionController
+  joint: link_3
+  pid: {p: 100.0, i: 0.01, d: 10.0}
+driver_gear_position_controller:
+  type: position_controllers/JointPositionController
+  joint: driver_gear
+  pid: {p: 10.0, i: 0.01, d: 1.0}
+gripper_1_position_controller:
+  type: position_controllers/JointPositionController
+  joint: gripper_1
+  pid: {p: 10.0, i: 0.01, d: 1.0}
+gripper_2_position_controller:
+  type: position_controllers/JointPositionController
+  joint: gripper_2
+  pid: {p: 10.0, i: 0.01, d: 1.0}
+
+# IMPORTANT: Add PID gains for wheel joints too, even though they aren't controlled by ros_control
+# These are just placeholders to satisfy the gazebo_ros_control plugin
+left_wheel_1: {pid: {p: 1.0, i: 0.0, d: 0.0}}
+left_wheel_2: {pid: {p: 1.0, i: 0.0, d: 0.0}}
+right_wheel_1: {pid: {p: 1.0, i: 0.0, d: 0.0}}
+right_wheel_2: {pid: {p: 1.0, i: 0.0, d: 0.0}}
+# Add placeholders for any other joints if needed (e.g., fixed joints might complain)
+base_link_robotic_arm: {pid: {p: 1.0, i: 0.0, d: 0.0}}
+link_4_1: {pid: {p: 1.0, i: 0.0, d: 0.0}}
+driven_gear: {pid: {p: 1.0, i: 0.0, d: 0.0}}
+link_4_2: {pid: {p: 1.0, i: 0.0, d: 0.0}}

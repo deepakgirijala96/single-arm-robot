@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>lam_challenge_sim</name>
+  <version>0.0.0</version>
+  <description>The lam_challenge_sim package</description>
+  <maintainer email="subhash@todo.todo">subhash</maintainer>
+  <license>TODO</license>
+
+  <!-- All your original dependencies are untouched -->
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>control_toolbox</build_depend>
+  <build_depend>gazebo_ros</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_export_depend>control_toolbox</build_export_depend>
+  <build_export_depend>gazebo_ros</build_export_depend>
+  <build_export_depend>geometry_msgs</build_export_depend>
+  <build_export_depend>roscpp</build_export_depend>
+  <build_export_depend>rospy</build_export_depend>
+  <build_export_depend>sensor_msgs</build_export_depend>
+  <build_export_depend>std_msgs</build_export_depend>
+  <exec_depend>control_toolbox</exec_depend>
+  <exec_depend>gazebo_ros</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>roscpp</exec_depend>
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <depend>urdf</depend>
+  <depend>xacro</depend>  
+  <depend>robot_state_publisher</depend>
+  <depend>joint_state_publisher</depend>
+  <depend>joint_state_publisher_gui</depend>
+  <depend>controller_manager</depend>
+  <depend>diff_drive_controller</depend>
+  <depend>joint_state_controller</depend>
+  <depend>gazebo_ros_control</depend>
+
+  <!-- ================================================================ -->
+  <!-- == THIS EXPORT BLOCK WAS ADDED =================================== -->
+  <!-- ================================================================ -->
+  <!-- This tells Gazebo where to find your materials/textures folder -->
+  <export>
+    <gazebo_ros gazebo_media_path="${prefix}"/>
+    <gazebo_ros gazebo_model_path="${prefix}/models"/>
+  </export>
+</package>
